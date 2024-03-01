@@ -12,18 +12,19 @@
 class Game : ArrayConio { //GAME INHERIT ARRAYCONIO
 public:
 	Game(short size, Player p); //CONSTRUCTOR
-	void play();
+	void play(); //PLAY :)
 	~Game(); //DESTRUCTOR
 protected:
 
 private:
 	void controller(); //CONTROLLER FUNC.
-	short key;
+	short key; //KEYBOARD KEY
 	char** t; // PTR TO PTR FOR MAP MATRIX
 	char* p; // PLAYER PTR
 	Player player; // PLAYER OBJ
 	bool extremidade = false; //`-` NO USE
 	bool checkCollider(short modifier, short y, short x, char ** map); //COLLIDER CHECKER
+	void playerstatus(); //SHOW PLAYER STATUS
 	//ArrayConio arr;
 };
 
@@ -34,6 +35,7 @@ Game::Game(short size, Player pl) : ArrayConio(size) { //GAME AND (SUPER)ARRAYCO
 	this->key = 0;
 	*this->player.getPlayer() = '1'; // CHANGE VALUE OF PLAYER PTR TO '1'
 	this->p = this->player.getPlayer(); //SET PTR P TO GET PLAYER *PTR FROM PLAYER OBJ
+	this->player.setAlive(true);
 }
 
 void Game::play() { //MAIN FUNC, WHO`LL CALL MOST OF FUNCS.
@@ -42,15 +44,15 @@ void Game::play() { //MAIN FUNC, WHO`LL CALL MOST OF FUNCS.
 	this->t[4][4] = 'L'; //
 	this->t[1][4] = '['; // --
 	this->screen();
+	this->playerstatus();
 	while (key != 27) {
 		this->key = _getch(); //WAIT FOR SOME INPUT AND ISERT THE INTEGER VALUE INTO KEY
 		this->extremidade = false;
 		this->controller();
 		this->refresh();
+		this->playerstatus();
 		//Sleep(50);
-
 	}
-	
 }
 
 void Game::controller() {
@@ -153,6 +155,9 @@ void Game::controller() {
 			}
 		}
 		break;
+	case 100:
+		this->player.setLf(this->player.getLf() - 5);
+		break;
 	}
 }
 
@@ -174,6 +179,22 @@ bool Game::checkCollider(short modifier, short y, short x, char** map) {
 	}
 }
 
+void Game::playerstatus() {
+	std::cout << std::endl << "HEALTH: " << this->player.lifeToScreen() << std::endl;
+	std::cout << "STAMIN: " << this->player.getStm() << std::endl;
+	std::cout << "AMMO: " << this->player.getAm() << std::endl;
+	if (this->player.getLvs() > 0) std::cout << "LIFES: " << this->player.getLvs() << std::endl;
+	else std::cout << "LIFES: LAST" << std::endl;
+	if (this->player.getLf() < 1) {
+		this->player.setLvs(this->player.getLvs() - 1);
+		this->player.setLf(100);
+	}
+	if (this->player.getLvs() < 0) {
+		this->key = 27;
+		this->refresh();
+		std::cout << std::endl << "GAME OVER!";
+	}
+}
 Game::~Game() {
 	this->p = nullptr;
 	this->t = nullptr;
