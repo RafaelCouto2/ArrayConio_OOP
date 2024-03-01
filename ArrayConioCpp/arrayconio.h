@@ -9,10 +9,11 @@
 class ArrayConio {
 	
 public:
-	ArrayConio(short size, Player p); //CONSTRUTOR
+	ArrayConio(short size); //CONSTRUTOR
 	~ArrayConio(); //DESTRUTOR
 	void screen(); //RENDERIZA
 	void refresh(); //ATUALIZA SCREEN()
+protected:
 	size_t getLine();
 	size_t getColumn();
 	char** getPtr();
@@ -21,26 +22,22 @@ private:
 	size_t LINE, COLUMN; //TAMANHO DAS LINHAS E COLUNAS
 	char** t; //PONTEIRO PARA PONTEIRO t;
 	const char MAP = '.'; // CHAR PADRÃO QUE SERÁ O MAPA.
-	Player player;
 };
 
-ArrayConio::ArrayConio(short size, Player p) {
-	this->player = p;
+ArrayConio::ArrayConio(short size) {
 	this->LINE = size;
 	this->COLUMN = (size * 2) + 1;
 	t = new char* [this->LINE]; //PONTEIRO PARA PONTEIRO T RECEBE ARRAY DE PONTEIRO DO TIPO CHAR.
-
 	for (size_t l = 0; l < this->LINE; l++) { //ALOCA NA MEMÓRIA, APONTADA POR 't', CINCO ÍNDICES DE CHAR.
 		this->t[l] = new char[COLUMN];
 	}
-
 	for (size_t l = 0; l < this->LINE; l++) { //INICIALIZA A MATRIZ DE 't'.
 		for (size_t c = 0; c < this->COLUMN; c++) {
 			this->t[l][c] = this->MAP;
 		}
 	}
-	
 }
+
 ArrayConio::~ArrayConio() {
 	for (size_t l = 0; l < this->LINE; l++) {
 		delete[] t[l];
@@ -85,7 +82,4 @@ char** ArrayConio::getPtr() {
 	return this->t;
 }
 
-Player ArrayConio::getPlayer() {
-	return this->player;
-}
 #endif // !ARRAYCONIO_H_INCLUDED

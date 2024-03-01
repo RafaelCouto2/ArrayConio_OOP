@@ -10,14 +10,17 @@ public:
 	void setLf(short l);
 	void setStm(short s);
 	void setAm(short a);
-	char* p;
+	char* getPlayer();
+	void setPos(char* p);
+	void setValue();
+	~Player();
 protected:
 	bool alive;
 private:
 	short status[3] = { LIFE, STAMIN, AMMO };
 	short* pstatus = status;
 	enum st { LIFE = 100, STAMIN = 100, AMMO = 50 };
-
+	char* p;
 };
 
 short Player::getLf() {
@@ -38,7 +41,18 @@ void Player::setStm(short s) {
 void Player::setAm(short a) {
 	this->pstatus[2] = a;
 }
-
-
+char* Player::getPlayer() {
+	return this->p;
+}
+void Player::setPos(char* p) {
+	this->p = p;
+}
+void Player::setValue() {
+	*this->getPlayer() = '1';
+}
+Player::~Player() {
+	this->pstatus = nullptr;
+	this->p = nullptr;
+}
 #endif // !PLAYERCONIO_H_INCLUDED
 

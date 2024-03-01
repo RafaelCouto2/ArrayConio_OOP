@@ -4,8 +4,7 @@
 
 int main() {
     Player player;
-    
-    Game game(8, player);
+    Game game(7, player);
     game.play();
 
     
