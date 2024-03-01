@@ -4,23 +4,23 @@
 #include "arrayconio.h"
 class Player {
 public:
-	short getLf();
-	short getStm();
-	short getAm();
-	void setLf(short l);
-	void setStm(short s);
-	void setAm(short a);
-	char* getPlayer();
-	void setPos(char* p);
-	void setValue();
-	~Player();
+	short getLf(); //RETURN THE LIFE OF THE PLAYER
+	short getStm(); //RETURN THE STAMIN OF THE PLAYER
+	short getAm(); //RETURN THE AMMO OF THE PLAYER
+	void setLf(short l); //CHANGE THE LIFE --
+	void setStm(short s); //CHANGE THE STAMIN --
+	void setAm(short a); //CHANGE THE AMMO --
+	char* getPlayer(); //RETURN THE PTR PLAYER
+	void setPos(char* p); //CHANGE POS X Y FROM PTR P
+	void setValue(); //CHANGE VALUE OF *PTR
+	~Player(); //DESTRUCTOR
 protected:
-	bool alive;
+	bool alive; //STATUS
 private:
-	short status[3] = { LIFE, STAMIN, AMMO };
-	short* pstatus = status;
-	enum st { LIFE = 100, STAMIN = 100, AMMO = 50 };
-	char* p;
+	short status[3] = { LIFE, STAMIN, AMMO }; //3 INDEX ARRAY WHO'LL HAVE THE BASE VALUES OF CONSTATS. (CHANGEABLE)
+	short* pstatus = status; // PTR TO STATUS
+	enum st { LIFE = 100, STAMIN = 100, AMMO = 50 }; //LIFE, STAMIN, AMMO ENUM VALUES. CONSTANTS
+	char* p; //PTR P
 };
 
 short Player::getLf() {

@@ -12,12 +12,12 @@ public:
 	ArrayConio(short size); //CONSTRUTOR
 	~ArrayConio(); //DESTRUTOR
 	void screen(); //RENDERIZA
-	void refresh(); //ATUALIZA SCREEN()
+	void refresh(); //ATUALIZA (UPDATE) SCREEN()
 protected:
-	size_t getLine();
-	size_t getColumn();
-	char** getPtr();
-	Player getPlayer();
+	size_t getLine(); //RETURN THE LENGTH OF THE LINE
+	size_t getColumn(); //RETURN THE LENGTH OF THE COLUMN
+	char** getPtr(); //RETURN THE PTR OF THE MATRIX FROM ARRAYCONIO
+	//Player getPlayer(); //RETURN THE PLAYER OBJ
 private:
 	size_t LINE, COLUMN; //TAMANHO DAS LINHAS E COLUNAS
 	char** t; //PONTEIRO PARA PONTEIRO t;

@@ -3,9 +3,7 @@
 #include "game.h"
 
 int main() {
-    Player player;
-    Game game(7, player);
-    game.play();
-
-    
+    Player player; //CREATE PLAYER OBJ
+    Game game(7, player); //CREATE THE GAME, PARSING THE SIZE AND PLAYER OBJ
+    game.play(); //THE ALL FUNC
 }
