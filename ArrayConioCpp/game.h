@@ -13,16 +13,17 @@ class Game : ArrayConio {
 public:
 	Game(short size, Player p);
 	void play();
-	void controller();
 	~Game();
 protected:
 
 private:
+	void controller();
 	short key;
 	char** t;
 	char* p;
 	Player player;
 	bool extremidade = false;
+	bool checkCollider(short modifier, short y, short x, char ** map);
 	//ArrayConio arr;
 };
 
@@ -36,13 +37,17 @@ Game::Game(short size, Player pl) : ArrayConio(size) {
 }
 
 void Game::play() {
+	this->t[2][2] = '-';
+	this->t[3][1] = '0';
+	this->t[4][4] = 'L';
+	this->t[1][4] = '[';
 	this->screen();
 	while (key != 27) {
 		this->key = _getch();
 		this->extremidade = false;
 		this->controller();
 		this->refresh();
-		Sleep(50);
+		//Sleep(50);
 
 	}
 	
@@ -60,14 +65,16 @@ void Game::controller() {
 						*this->p = '1';
 					}
 					else {
-						if (!this->extremidade) {
-							*this->p = '.';
-							this->p = &(this->t[l - 1][c]);
-							*this->p = '1';
+						if (!this->checkCollider('Y', l, c, this->t)) {
+							if (!this->extremidade) {
+								*this->p = '.';
+								this->p = &(this->t[l - 1][c]);
+								*this->p = '1';
+							}
 						}
 					}
 				}
-				
+
 			}
 		}
 		break;
@@ -81,10 +88,12 @@ void Game::controller() {
 						*this->p = '1';
 					}
 					else {
-						if (!this->extremidade) {
-							*this->p = '.';
-							this->p = &(this->t[++l][c]);
-							*this->p = '1';
+						if (!this->checkCollider('-Y', l, c, this->t)) {
+							if (!this->extremidade) {
+								*this->p = '.';
+								this->p = &(this->t[++l][c]);
+								*this->p = '1';
+							}
 						}
 					}
 				}
@@ -106,16 +115,17 @@ void Game::controller() {
 						*this->p = '1';
 					}
 					else {
-						if (!this->extremidade) {
-							*this->p = '.';
-							this->p = &(this->t[l][c - 1]);
-							*this->p = '1';
+						if (!this->checkCollider('-X', l, c, this->t)) {
+							if (!this->extremidade) {
+								*this->p = '.';
+								this->p = &(this->t[l][c - 1]);
+								*this->p = '1';
+							}
 						}
 					}
 				}
-				}
-
 			}
+		}
 		break;
 	case KEY_RIGHT:
 		for (size_t l = 0; l < this->getLine(); l++) {
@@ -132,10 +142,12 @@ void Game::controller() {
 						*this->p = '1';
 					}
 					else {
-						if (!this->extremidade) {
-							*this->p = '.';
-							this->p = &(this->t[l][++c]);
-							*this->p = '1';
+						if (!this->checkCollider('X', l, c, this->t)) {
+							if (!this->extremidade) {
+								*this->p = '.';
+								this->p = &(this->t[l][++c]);
+								*this->p = '1';
+							}
 						}
 					}
 				}
@@ -144,6 +156,24 @@ void Game::controller() {
 		}
 		break;
 	}
+}
+
+bool Game::checkCollider(short modifier, short y, short x, char** map) {
+	switch (modifier) {
+	case 'Y':
+		return (map[y - 1][x] != '.');
+		break;
+	case '-Y':
+		return (map[++y][x] != '.');
+		break;
+	case '-X':
+		return ((map[y][x - 1] != '.'));
+		break;
+	case 'X':
+		return (map[y][++x] != '.');
+		break;
+	}
+	
 }
 
 Game::~Game() {
