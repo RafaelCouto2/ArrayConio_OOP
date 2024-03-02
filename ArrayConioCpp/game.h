@@ -3,6 +3,7 @@
 #include <conio.h>
 #include <windows.h>
 #include "modifiers.h"
+#include "Controller.h"
 #ifndef GAME_H_INCLUDED
 #define GAME_H_INCLUDED
 #define KEY_UP 72
@@ -18,15 +19,16 @@ public:
 protected:
 
 private:
+	//ArrayConio conio;
 	void controller(); //CONTROLLER FUNC.
 	short key; //KEYBOARD KEY
 	char** t; // PTR TO PTR FOR MAP MATRIX
 	char* p; // PLAYER PTR
 	Player player; // PLAYER OBJ
 	Atqmodifier atqMod[2];
+	Controller *game_controller;
 	void changeAtqModifier();
 	bool extremidade = false; //`-` NO USE
-	bool checkCollider(short modifier, short y, short x, char ** map); //COLLIDER CHECKER
 	void playerstatus(); //SHOW PLAYER STATUS
 	//ArrayConio arr;
 };
@@ -40,6 +42,7 @@ Game::Game(short size, Player pl) : ArrayConio(size) { //GAME AND (SUPER)ARRAYCO
 	this->p = this->player.getPlayer(); //SET PTR P TO GET PLAYER *PTR FROM PLAYER OBJ
 	this->player.setAlive(true);
 	this->atqMod[0].setAtqMod(this->atqMod[1].getAtqMod() * 1.5);
+	game_controller = new Controller(this->t, this->p, this->getLine());
 }
 
 void Game::play() { //MAIN FUNC, WHO`LL CALL MOST OF FUNCS.
@@ -48,134 +51,11 @@ void Game::play() { //MAIN FUNC, WHO`LL CALL MOST OF FUNCS.
 	while (key != 27) {
 		this->key = _getch(); //WAIT FOR SOME INPUT AND ISERT THE INTEGER VALUE INTO KEY
 		this->extremidade = false;
-		this->controller();
+		this->game_controller->controller(this->key);
+		//this->controller();
 		this->refresh();
 		this->playerstatus();
 		//Sleep(50);
-	}
-}
-
-void Game::controller() {
-	switch (key) {
-	case KEY_UP: //MOV PLAYER +Y
-		for (size_t l = 0; l < this->getLine(); l++) {
-			for (size_t c = 0; c < this->getColumn(); c++) {
-				if (&this->t[l][c] == this->p) {
-					if (this->p == &this->t[0][c]) {
-						this->extremidade = true;
-						this->p = &this->t[l][c];
-						*this->p = '1';
-					}
-					else {
-						if (!this->checkCollider('Y', l, c, this->t)) {
-							if (!this->extremidade) {
-								*this->p = '.';
-								this->p = &(this->t[l - 1][c]);
-								*this->p = '1';
-							}
-						}
-					}
-				}
-			}
-		}
-		break;
-	case KEY_DOWN: //MOV PLAYER -Y
-		for (size_t l = 0; l < this->getLine(); l++) {
-			for (size_t c = 0; c < this->getColumn(); c++) {
-				if (&this->t[l][c] == this->p) {
-					if (this->p == &this->t[this->getLine() - 1][c]) {
-						this->extremidade = true;
-						this->p = &this->t[l][c];
-						*this->p = '1';
-					}
-					else {
-						if (!this->checkCollider('-Y', l, c, this->t)) {
-							if (!this->extremidade) {
-								*this->p = '.';
-								this->p = &(this->t[++l][c]);
-								*this->p = '1';
-							}
-						}
-					}
-				}
-			}
-		}
-		break;
-	case KEY_LEFT: //MOV PLAYER -X
-		for (size_t l = 0; l < this->getLine(); l++) {
-			for (size_t c = 0; c < this->getColumn(); c++) {
-				if (&this->t[l][c] == this->p) {
-					/*if (this->p == &this->t[0][0]) {
-						this->extremidade = true;
-						this->p = &this->t[0][0];
-						*this->p = '1';
-					}
-					else*/ 
-					if (this->p == &this->t[l][0]) {
-						this->p = &this->t[l][c];
-						*this->p = '1';
-					}
-					else {
-						if (!this->checkCollider('-X', l, c, this->t)) {
-							if (!this->extremidade) {
-								*this->p = '.';
-								this->p = &(this->t[l][c - 1]);
-								*this->p = '1';
-							}
-						}
-					}
-				}
-			}
-		}
-		break;
-	case KEY_RIGHT: //MOV PLAYER +X
-		for (size_t l = 0; l < this->getLine(); l++) {
-			for (size_t c = 0; c < this->getColumn(); c++) {
-				if (&this->t[l][c] == this->p) {
-					/*if (this->p == &this->t[this->getLine() - 1][this->getColumn() - 1]) {
-						this->extremidade = true;
-						this->p = &this->t[l][c];
-						*this->p = '1';
-					}
-					else*/
-					if (this->p == &this->t[l][this->getColumn() - 1]) {
-						this->p = &this->t[l][c];
-						*this->p = '1';
-					}
-					else {
-						if (!this->checkCollider('X', l, c, this->t)) {
-							if (!this->extremidade) {
-								*this->p = '.';
-								this->p = &(this->t[l][++c]);
-								*this->p = '1';
-							}
-						}
-					}
-				}
-			}
-		}
-		break;
-	case 100:
-		this->player.setLf(this->player.getLf() - 5);
-		break;
-	}
-}
-
-bool Game::checkCollider(short modifier, short y, short x, char** map) {
-	//DETERMINE THE COLLIDER DIRECTION CHECKER BY MODIFIER
-	switch (modifier) {
-	case 'Y':
-		return (map[y - 1][x] != '.');
-		break;
-	case '-Y':
-		return (map[++y][x] != '.');
-		break;
-	case '-X':
-		return ((map[y][x - 1] != '.'));
-		break;
-	case 'X':
-		return (map[y][++x] != '.');
-		break;
 	}
 }
 
@@ -201,8 +81,10 @@ void Game::changeAtqModifier() {
 }
 
 Game::~Game() {
+	delete this->game_controller;
 	this->p = nullptr;
 	this->t = nullptr;
+	this->game_controller = nullptr;
 }
 #endif // !GAME_H_INCLUDED
 

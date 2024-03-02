@@ -47,5 +47,8 @@
     <ClInclude Include="playerconio.h">
       <Filter>Arquivos de Origem\entities</Filter>
     </ClInclude>
+    <ClInclude Include="playercolliderchecker.h">
+      <Filter>Arquivos de Origem\funcs</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
