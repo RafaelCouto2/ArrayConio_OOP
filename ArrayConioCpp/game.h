@@ -82,8 +82,12 @@ void Game::changeAtqModifier() {
 }
 
 Game::~Game() {
-	delete this->game_controller;
-	delete this->conio;
+	if (this->game_controller != nullptr) {
+		delete this->game_controller;
+	}
+	if (this->conio != nullptr) {
+		delete this->conio;
+	}
 	this->p = nullptr;
 	this->t = nullptr;
 	this->game_controller = nullptr;
