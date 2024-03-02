@@ -2,6 +2,7 @@
 #include "arrayconio.h"
 #include <conio.h>
 #include <windows.h>
+#include "modifiers.h"
 #ifndef GAME_H_INCLUDED
 #define GAME_H_INCLUDED
 #define KEY_UP 72
@@ -22,6 +23,8 @@ private:
 	char** t; // PTR TO PTR FOR MAP MATRIX
 	char* p; // PLAYER PTR
 	Player player; // PLAYER OBJ
+	Atqmodifier atqMod[2];
+	void changeAtqModifier();
 	bool extremidade = false; //`-` NO USE
 	bool checkCollider(short modifier, short y, short x, char ** map); //COLLIDER CHECKER
 	void playerstatus(); //SHOW PLAYER STATUS
@@ -36,13 +39,10 @@ Game::Game(short size, Player pl) : ArrayConio(size) { //GAME AND (SUPER)ARRAYCO
 	*this->player.getPlayer() = '1'; // CHANGE VALUE OF PLAYER PTR TO '1'
 	this->p = this->player.getPlayer(); //SET PTR P TO GET PLAYER *PTR FROM PLAYER OBJ
 	this->player.setAlive(true);
+	this->atqMod[0].setAtqMod(this->atqMod[1].getAtqMod() * 1.5);
 }
 
 void Game::play() { //MAIN FUNC, WHO`LL CALL MOST OF FUNCS.
-	this->t[2][2] = '-'; //JUST A FEW RANDOM "OBJECTS" TO TEST THE COLLIDER
-	this->t[3][1] = '0'; //
-	this->t[4][4] = 'L'; //
-	this->t[1][4] = '['; // --
 	this->screen();
 	this->playerstatus();
 	while (key != 27) {
@@ -195,6 +195,11 @@ void Game::playerstatus() {
 		std::cout << std::endl << "GAME OVER!";
 	}
 }
+
+void Game::changeAtqModifier() {
+	this->atqMod[0].setAtqMod(this->atqMod[1].getAtqMod() * 1.5);
+}
+
 Game::~Game() {
 	this->p = nullptr;
 	this->t = nullptr;

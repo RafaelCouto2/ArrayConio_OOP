@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Arquivos de Origem\map">
+      <UniqueIdentifier>{6f0614ad-7602-442a-9771-7d58b4e1cd3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\funcs">
+      <UniqueIdentifier>{f0ff989a-5bd6-4fb8-b18c-38a5bec70821}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\entities">
+      <UniqueIdentifier>{91b4abcf-54eb-47f9-9170-d277db0161ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArrayConioCpp.cpp">
@@ -20,17 +29,23 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="arrayconio.h">
-      <Filter>Arquivos de Origem</Filter>
-    </ClInclude>
-    <ClInclude Include="playerconio.h">
-      <Filter>Arquivos de Origem</Filter>
-    </ClInclude>
     <ClInclude Include="game.h">
       <Filter>Arquivos de Origem</Filter>
     </ClInclude>
+    <ClInclude Include="arrayconio.h">
+      <Filter>Arquivos de Origem\map</Filter>
+    </ClInclude>
+    <ClInclude Include="modifiers.h">
+      <Filter>Arquivos de Origem\funcs</Filter>
+    </ClInclude>
     <ClInclude Include="Controller.h">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>Arquivos de Origem\funcs</Filter>
+    </ClInclude>
+    <ClInclude Include="enm1.h">
+      <Filter>Arquivos de Origem\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="playerconio.h">
+      <Filter>Arquivos de Origem\entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

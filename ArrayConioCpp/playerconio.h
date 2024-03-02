@@ -23,10 +23,10 @@ public:
 protected:
 	bool alive; //STATUS
 private:
+	enum st { LIFE = 100, STAMIN = 100, AMMO = 50, LIVES = 3 }; //LIFE, STAMIN, AMMO ENUM VALUES. CONSTANTS
 	char lifeScreen[100];
 	short status[4] = { LIFE, STAMIN, AMMO, LIVES }; //4 INDEX ARRAY WHO'LL HAVE THE BASE VALUES OF CONSTATS. (CHANGEABLE)
 	short* pstatus = status; // PTR TO STATUS
-	enum st { LIFE = 100, STAMIN = 100, AMMO = 50, LIVES = 3 }; //LIFE, STAMIN, AMMO ENUM VALUES. CONSTANTS
 	char* p; //PTR P
 };
 
