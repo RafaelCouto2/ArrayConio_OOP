@@ -30,7 +30,6 @@ private:
 	void changeAtqModifier();
 	bool extremidade = false; //`-` NO USE
 	void playerstatus(); //SHOW PLAYER STATUS
-	//ArrayConio arr;
 };
 
 Game::Game(short size, Player pl) { //GAME AND (SUPER)ARRAYCONIO CONSTRUCTOR.

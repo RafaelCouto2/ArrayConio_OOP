@@ -14,7 +14,6 @@ public:
 private:
 	char** t;
 	char* p;
-	short key;
 	bool extremidade;
 	size_t LINE, COLUMN;
 	Collider collider;
@@ -36,7 +35,6 @@ void Controller::controller(short key) {
 			for (size_t c = 0; c < this->COLUMN; c++) {
 				if (&this->t[l][c] == this->p) {
 					if (this->p == &this->t[0][c]) {
-						//this->extremidade = true;
 						this->p = &this->t[l][c];
 						*this->p = '1';
 					}
@@ -58,7 +56,6 @@ void Controller::controller(short key) {
 			for (size_t c = 0; c < this->COLUMN; c++) {
 				if (&this->t[l][c] == this->p) {
 					if (this->p == &this->t[this->LINE - 1][c]) {
-						//this->extremidade = true;
 						this->p = &this->t[l][c];
 						*this->p = '1';
 					}

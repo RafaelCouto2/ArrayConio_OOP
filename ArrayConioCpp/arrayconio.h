@@ -16,7 +16,6 @@ public:
 	size_t getLine(); //RETURN THE LENGTH OF THE LINE
 	size_t getColumn(); //RETURN THE LENGTH OF THE COLUMN
 	char** getPtr(); //RETURN THE PTR OF THE MATRIX FROM ARRAYCONIO
-	//Player getPlayer(); //RETURN THE PLAYER OBJ
 protected:
 	
 private:

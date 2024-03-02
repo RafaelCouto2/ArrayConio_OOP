@@ -38,9 +38,6 @@ void Atqmodifier::setAtqMod(float atm) {
 	this->atqmod = atm;
 }
 void Atqmodifier::setBaseAtq(float batq) {
-	/*if (!batq < this->baseatq) {
-		this->baseatq = batq;
-	}*/
 	this->baseatq = (batq < this->getBaseAtq())?this->baseatq = this->baseatq:this->baseatq = batq;
 }
 float Atqmodifier::getAtqMod() {
