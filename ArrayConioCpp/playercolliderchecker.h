@@ -4,14 +4,14 @@
 
 class Collider {
 public:
-	bool checkCollider(short modifier, short y, short x, char** map);
+	bool checkCollider(short modifier, size_t y, size_t x, char** map);
 protected:
 
 private:
 
 };
 
-bool Collider::checkCollider(short modifier, short y, short x, char** map) {
+bool Collider::checkCollider(short modifier, size_t y, size_t x, char** map) {
 	//DETERMINE THE COLLIDER DIRECTION CHECKER BY MODIFIER
 	switch (modifier) {
 	case 'Y':
