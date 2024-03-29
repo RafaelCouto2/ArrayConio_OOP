@@ -5,6 +5,7 @@
 - [x] `Map`
 - [x] `Player`
 - [x] `Player Collider`
+- [x] `Battle Trigger Checker`
 - [ ] `Enemies`
 - [ ] `More Maps`
 - [ ] `Combat system`
