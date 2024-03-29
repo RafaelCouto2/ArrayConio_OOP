@@ -1,10 +1,8 @@
 #pragma once
-
-#ifndef ARRAYCONIO_H_INCLUDED
-#define ARRAYCONIO_H_INCLUDED
-
 #include <iostream>
 #include "playerconio.h"
+#ifndef ARRAYCONIO_H_INCLUDED
+#define ARRAYCONIO_H_INCLUDED
 
 class ArrayConio {
 	

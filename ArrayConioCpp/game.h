@@ -6,12 +6,8 @@
 #include "Controller.h"
 #ifndef GAME_H_INCLUDED
 #define GAME_H_INCLUDED
-#define KEY_UP 72
-#define KEY_DOWN 80
-#define KEY_LEFT 75
-#define KEY_RIGHT 77
 
-class Game { //GAME INHERIT ARRAYCONIO
+class Game {
 public:
 	Game(short size, Player p); //CONSTRUCTOR
 	void play(); //PLAY :)
@@ -38,8 +34,8 @@ Game::Game(short size, Player pl) { //GAME AND (SUPER)ARRAYCONIO CONSTRUCTOR.
 	this->player = pl;
 	this->player.setPos(&(this->t[this->conio->getLine() / 2][this->conio->getColumn() / 2])); //SET PLAYER POS *PTR TO THE MIDDLE OF MAP MATRIX ADRESS
 	this->key = 0;
-	*this->player.getPlayer() = '1'; // CHANGE VALUE OF PLAYER PTR TO '1'
 	this->p = this->player.getPlayer(); //SET PTR P TO GET PLAYER *PTR FROM PLAYER OBJ
+	this->player.setInGameValue('x'); // CHANGE VALUE OF PLAYER PTR TO '1'
 	this->player.setAlive(true);
 	this->atqMod[0].setAtqMod(this->atqMod[1].getAtqMod() * 1.5f);
 	game_controller = new Controller(this->t, this->p, this->conio->getLine());
@@ -49,10 +45,13 @@ void Game::play() { //MAIN FUNC, WHO`LL CALL MOST OF FUNCS.
 	this->conio->screen();
 	this->playerstatus();
 	this->t[2][1] = '2';
+	this->t[1][2] = 'O';
+	this->t[4][0] = 'I';
+	this->t[3][3] = 'J';
 	while (key != 27) {
 		this->key = _getch(); //WAIT FOR SOME INPUT AND ISERT THE INTEGER VALUE INTO KEY
 		this->extremidade = false;
-		this->game_controller->controller(this->key);
+		this->game_controller->controller(this->key, 'x' /*WHAT IS THE PLAYER*/);
 		this->conio->refresh();
 		this->playerstatus();
 		//Sleep(50);

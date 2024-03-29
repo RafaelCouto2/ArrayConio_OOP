@@ -1,8 +1,9 @@
 #pragma once
-#ifndef PLAYERCONIO_H_INCLUDED
-#define PLAYERCONIO_H_INCLUDED
 #include "arrayconio.h"
 #include <string>
+#ifndef PLAYERCONIO_H_INCLUDED
+#define PLAYERCONIO_H_INCLUDED
+
 class Player {
 public:
 	short getLf(); //RETURN THE LIFE OF THE PLAYER
@@ -15,7 +16,7 @@ public:
 	void setAm(short a); //CHANGE THE AMMO --
 	char* getPlayer(); //RETURN THE PTR PLAYER
 	void setPos(char* p); //CHANGE POS X Y FROM PTR P
-	void setValue(); //CHANGE VALUE OF *PTR
+	void setInGameValue(char value); //CHANGE VALUE OF *PTR
 	bool isAlive(); //RETURN THE ALIVE STATUS OF THE PLAYER
 	void setAlive(bool l); //CHANGE THE ALIVE STATUS OF THE PLAYER
 	std::string lifeToScreen();
@@ -54,8 +55,8 @@ char* Player::getPlayer() {
 void Player::setPos(char* p) {
 	this->p = p;
 }
-void Player::setValue() {
-	*this->getPlayer() = '1';
+void Player::setInGameValue(char value) {
+	*this->getPlayer() = value;
 }
 Player::~Player() {
 	this->pstatus = nullptr;

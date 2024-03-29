@@ -131,12 +131,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arrayconio.h" />
+    <ClInclude Include="battle.h" />
     <ClInclude Include="Controller.h" />
-    <ClInclude Include="enm1.h" />
+    <ClInclude Include="enemies.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="modifiers.h" />
     <ClInclude Include="playercolliderchecker.h" />
     <ClInclude Include="playerconio.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="enemies.txt">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DeploymentContent>
+    </Text>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

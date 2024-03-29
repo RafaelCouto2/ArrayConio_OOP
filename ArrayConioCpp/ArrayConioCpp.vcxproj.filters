@@ -41,7 +41,7 @@
     <ClInclude Include="Controller.h">
       <Filter>Arquivos de Origem\funcs</Filter>
     </ClInclude>
-    <ClInclude Include="enm1.h">
+    <ClInclude Include="enemies.h">
       <Filter>Arquivos de Origem\entities</Filter>
     </ClInclude>
     <ClInclude Include="playerconio.h">
@@ -50,5 +50,13 @@
     <ClInclude Include="playercolliderchecker.h">
       <Filter>Arquivos de Origem\funcs</Filter>
     </ClInclude>
+    <ClInclude Include="battle.h">
+      <Filter>Arquivos de Origem\funcs</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="enemies.txt">
+      <Filter>Arquivos de Origem\entities</Filter>
+    </Text>
   </ItemGroup>
 </Project>
