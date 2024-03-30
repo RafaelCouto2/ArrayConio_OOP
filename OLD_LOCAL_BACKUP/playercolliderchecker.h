@@ -4,18 +4,17 @@
 
 class Collider {
 public:
-	bool checkCollider(short axis, size_t y, size_t x, char** map);
-	bool battleChecker(short axis, char** map, std::string enemy, size_t y, size_t x);
-	char temp;
+	bool checkCollider(short modifier, size_t y, size_t x, char** map);
+	bool battleChecker(short modifier, char** map, std::string enemy, size_t y, size_t x);
 protected:
 
 private:
 
 };
 
-bool Collider::checkCollider(short axis, size_t y, size_t x, char** map) {
-	//DETERMINE THE COLLIDER DIRECTION CHECKER BY AXIS
-	switch (axis) {
+bool Collider::checkCollider(short modifier, size_t y, size_t x, char** map) {
+	//DETERMINE THE COLLIDER DIRECTION CHECKER BY MODIFIER
+	switch (modifier) {
 	case 'Y':
 		return (map[y - 1][x] != '.');
 		break;
@@ -34,15 +33,13 @@ bool Collider::checkCollider(short axis, size_t y, size_t x, char** map) {
 	}
 }
 
-bool Collider::battleChecker(short axis, char** map, std::string enemy, size_t y, size_t x) {
-	this->temp = NULL;
-	switch (axis) {
+bool Collider::battleChecker(short modifier, char** map, std::string enemy, size_t y, size_t x) {
+	switch (modifier) {
 	case 'Y':
 		for (size_t e = 0; e < enemy.length(); e++) {
 			if (map[y - 1][x] == enemy.at(e)) {
 				std::cout << "YOU`V TOUCHED A ENEMY! LET`S BATTLE!";
 				Sleep(800);
-				this->temp = enemy.at(e);
 				return true;
 				break;
 			}
@@ -54,7 +51,6 @@ bool Collider::battleChecker(short axis, char** map, std::string enemy, size_t y
 			if (map[y + 1][x] == enemy.at(e)) {
 				std::cout << "YOU`V TOUCHED A ENEMY! LET`S BATTLE!";
 				Sleep(800);
-				this->temp = enemy.at(e);
 				return true;
 				break;
 			}
@@ -66,7 +62,6 @@ bool Collider::battleChecker(short axis, char** map, std::string enemy, size_t y
 			if (map[y][x - 1] == enemy.at(e)) {
 				std::cout << "YOU`V TOUCHED A ENEMY! LET`S BATTLE!";
 				Sleep(800);
-				this->temp = enemy.at(e);
 				return true;
 				break;
 			}
@@ -77,8 +72,7 @@ bool Collider::battleChecker(short axis, char** map, std::string enemy, size_t y
 		for (size_t e = 0; e < enemy.length(); e++) {
 			if (map[y][x + 1] == enemy.at(e)) {
 				std::cout << "YOU`V TOUCHED A ENEMY! LET`S BATTLE!";
-				Sleep(600);
-				this->temp = enemy.at(e);
+				Sleep(800);
 				return true;
 				break;
 			}

@@ -12,7 +12,7 @@
 
 class Controller {
 public:
-	Controller(ArrayConio* map, Player* playerp, size_t LC);
+	Controller(char** map, char* p, size_t LC);
 	void controller(short key, char ingameplayer = '1');
 private:
 	char** t;
@@ -22,16 +22,13 @@ private:
 	Collider collider;
 	Battle battle;
 	Enemies enemiesKeyCode;
-	Player* player;
-	ArrayConio* mapscreen;
+	
 protected:
 	
 };
-Controller::Controller(ArrayConio* map, Player* playerp, size_t LC) {
-	this->t = map->getPtr();
-	this->player = playerp;
-	this->mapscreen = map;
-	this->p = player->getPlayer();
+Controller::Controller(char** map, char* p, size_t LC) {
+	this->t = map;
+	this-> p = p;
 	this->LINE = LC;
 	this->COLUMN = (LC * 2) + 1;
 	this->extremidade = false;
@@ -128,9 +125,7 @@ void Controller::controller(short key, char ingameplayer) {
 							}
 						}
 						else {
-							//this->player->setPos(&(this->t[l][c]));
-							this->battle.battleTrigger(this->collider.battleChecker('X', this->t, this->enemiesKeyCode.enemiesString, l, c), 
-								'X', this->player, &this->enemiesKeyCode, &this->collider, this->mapscreen, l, c);
+							this->battle.battleTrigger(this->collider.battleChecker('X', this->t, this->enemiesKeyCode.enemiesString, l, c));
 						}
 					}
 				}

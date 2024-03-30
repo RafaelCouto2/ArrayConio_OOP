@@ -1,14 +1,11 @@
 #pragma once
 #include "arrayconio.h"
 #include <string>
-#include "modifiers.h"
 #ifndef PLAYERCONIO_H_INCLUDED
 #define PLAYERCONIO_H_INCLUDED
 
 class Player {
 public:
-	~Player(); //DESTRUCTOR
-	Player();
 	short getLf(); //RETURN THE LIFE OF THE PLAYER
 	short getStm(); //RETURN THE STAMIN OF THE PLAYER
 	short getAm(); //RETURN THE AMMO OF THE PLAYER
@@ -23,39 +20,16 @@ public:
 	bool isAlive(); //RETURN THE ALIVE STATUS OF THE PLAYER
 	void setAlive(bool l); //CHANGE THE ALIVE STATUS OF THE PLAYER
 	std::string lifeToScreen();
-	Atqmodifier* getPlayerMod();
-	float getBaseAtq();
-	float getBaseDef();
-	void setBaseAtq(float batq);
-	void setBaseDef();
-	void setPotions(short totPot);
-	short getPotions();
-	void setInvCap(short cap);
-	short getInvCap();
+	~Player(); //DESTRUCTOR
 protected:
 	bool alive; //STATUS
-	Atqmodifier modifier;
 private:
-	
 	enum st { LIFE = 100, STAMIN = 100, AMMO = 50, LIVES = 3 }; //LIFE, STAMIN, AMMO ENUM VALUES. CONSTANTS
 	char lifeScreen[100];
 	short status[4] = { LIFE, STAMIN, AMMO, LIVES }; //4 INDEX ARRAY WHO'LL HAVE THE BASE VALUES OF CONSTATS. (CHANGEABLE)
 	short* pstatus = status; // PTR TO STATUS
 	char* p; //PTR P
-	float baseAtq, baseDef;
-	short invCap;
-	short potions;
 };
-
-Player::Player() {
-	this->setLf(100);
-	this->setLvs(3);
-	this->modifier.setBaseAtq(1.11);
-	this->baseAtq = this->modifier.getBaseAtq();
-	this->modifier.setBaseDef(baseAtq / (1.5 * 0.52));
-	this->baseDef = this->modifier.getBaseDef();
-	this->setPotions(3);
-}
 
 short Player::getLf() {
 	return this->pstatus[0];
@@ -85,7 +59,6 @@ void Player::setInGameValue(char value) {
 	*this->getPlayer() = value;
 }
 Player::~Player() {
-	//delete this->modifierPlayer;
 	this->pstatus = nullptr;
 	this->p = nullptr;
 }
@@ -114,30 +87,6 @@ short Player::getLvs() {
 }
 void Player::setLvs(short lvs) {
 	this->pstatus[3] = lvs;
-}
-
-Atqmodifier* Player::getPlayerMod() {
-	return &this->modifier;
-}
-
-void Player::setBaseAtq(float batq) {
-	this->baseAtq = batq;
-}
-
-void Player::setPotions(short totPot) {
-	this->potions = totPot;
-}
-
-short Player::getPotions() {
-	return this->potions;
-}
-
-void Player::setInvCap(short cap) {
-	this->invCap = cap;
-}
-
-short Player::getInvCap() {
-	return this->invCap;
 }
 #endif // !PLAYERCONIO_H_INCLUDED
 
