@@ -32,6 +32,7 @@ public:
 	short getPotions();
 	void setInvCap(short cap);
 	short getInvCap();
+	void usePotion();
 protected:
 	bool alive; //STATUS
 	Atqmodifier modifier;
@@ -138,6 +139,13 @@ void Player::setInvCap(short cap) {
 
 short Player::getInvCap() {
 	return this->invCap;
+}
+
+void Player::usePotion() {
+	if (this->getLf() < 100) {
+		this->setPotions(this->getPotions() - 1);
+		this->setLf(100);
+	}
 }
 #endif // !PLAYERCONIO_H_INCLUDED
 

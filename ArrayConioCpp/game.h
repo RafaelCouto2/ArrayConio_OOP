@@ -59,15 +59,11 @@ void Game::play() { //MAIN FUNC, WHO`LL CALL MOST OF FUNCS.
 		this->key = _getch(); //WAIT FOR SOME INPUT AND ISERT THE INTEGER VALUE INTO KEY
 		this->extremidade = false;
 		if (key == 112) {
-			if (this->player->getLf() < 100) {
-				this->player->setPotions(this->player->getPotions() - 1);
-				this->player->setLf(100);
-			}
+			this->player->usePotion();
 		}
 		this->game_controller->controller(this->key, 'x' /*WHAT IS THE PLAYER*/);
 		this->conio->refresh();
 		this->playerstatus();
-		//Sleep(50);
 	}
 
 }
@@ -78,10 +74,6 @@ void Game::playerstatus() {
 	std::cout << "POTIONS: " << this->player->getPotions() << std::endl;
 	if (this->player->getLvs() > 0) std::cout << "LIFES: " << this->player->getLvs() << std::endl;
 	else std::cout << "LIFES: LAST" << std::endl;
-	/*if (this->player->getLf() < 1) {
-		this->player->setLvs(this->player->getLvs() - 1);
-		this->player->setLf(100);
-	}*/
 	if (this->player->getLvs() < 0) {
 		this->key = 27;
 		this->conio->refresh();

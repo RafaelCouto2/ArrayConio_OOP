@@ -56,7 +56,8 @@ void Controller::controller(short key, char ingameplayer) {
 							}
 						}
 						else {
-							this->collider.battleChecker('Y', this->t, this->enemiesKeyCode.enemiesString, l, c);
+							this->battle.battleTrigger(this->collider.battleChecker('Y', this->t, this->enemiesKeyCode.enemiesString, l, c),
+								'Y', this->player, &this->enemiesKeyCode, &this->collider, this->mapscreen, l, c);
 						}
 					}
 				}
@@ -80,7 +81,8 @@ void Controller::controller(short key, char ingameplayer) {
 							}
 						}
 						else {
-							this->collider.battleChecker('-Y', this->t, this->enemiesKeyCode.enemiesString, l, c);
+							this->battle.battleTrigger(this->collider.battleChecker('-Y', this->t, this->enemiesKeyCode.enemiesString, l, c),
+								'y', this->player, &this->enemiesKeyCode, &this->collider, this->mapscreen, l, c);
 						}
 					}
 				}
@@ -104,7 +106,8 @@ void Controller::controller(short key, char ingameplayer) {
 							}
 						}
 						else {
-							this->collider.battleChecker('-X', this->t, this->enemiesKeyCode.enemiesString, l, c);
+							this->battle.battleTrigger(this->collider.battleChecker('-X', this->t, this->enemiesKeyCode.enemiesString, l, c),
+								'x', this->player, &this->enemiesKeyCode, &this->collider, this->mapscreen, l, c);
 						}
 					}
 				}
@@ -130,7 +133,7 @@ void Controller::controller(short key, char ingameplayer) {
 						else {
 							//this->player->setPos(&(this->t[l][c]));
 							this->battle.battleTrigger(this->collider.battleChecker('X', this->t, this->enemiesKeyCode.enemiesString, l, c), 
-								'X', this->player, &this->enemiesKeyCode, &this->collider, this->mapscreen, l, c);
+										'X', this->player, &this->enemiesKeyCode, &this->collider, this->mapscreen, l, c);
 						}
 					}
 				}
