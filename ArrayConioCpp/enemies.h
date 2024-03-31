@@ -37,13 +37,13 @@ public:
 	Enemie01(char e, short baseatq);
 	char getEnemy();
 	Atqmodifier* getEnemyMod();
-	short life;
 	short getLife();
 	void setLife(short life);
 	std::string lifeToScreen();
 protected:
 
 private:
+	short life;
 	short baseAtq;
 	short baseDef;
 	Atqmodifier modifier;

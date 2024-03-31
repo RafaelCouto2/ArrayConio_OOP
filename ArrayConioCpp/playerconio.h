@@ -20,6 +20,7 @@ public:
 	char* getPlayer(); //RETURN THE PTR PLAYER
 	void setPos(char* p); //CHANGE POS X Y FROM PTR P
 	void setInGameValue(char value); //CHANGE VALUE OF *PTR
+	char getInGameValue();
 	bool isAlive(); //RETURN THE ALIVE STATUS OF THE PLAYER
 	void setAlive(bool l); //CHANGE THE ALIVE STATUS OF THE PLAYER
 	std::string lifeToScreen();
@@ -37,7 +38,6 @@ protected:
 	bool alive; //STATUS
 	Atqmodifier modifier;
 private:
-	
 	enum st { LIFE = 100, STAMIN = 100, AMMO = 50, LIVES = 3 }; //LIFE, STAMIN, AMMO ENUM VALUES. CONSTANTS
 	char lifeScreen[100];
 	short status[4] = { LIFE, STAMIN, AMMO, LIVES }; //4 INDEX ARRAY WHO'LL HAVE THE BASE VALUES OF CONSTATS. (CHANGEABLE)
@@ -146,6 +146,10 @@ void Player::usePotion() {
 		this->setPotions(this->getPotions() - 1);
 		this->setLf(100);
 	}
+}
+
+char Player::getInGameValue() {
+	return *this->getPlayer();
 }
 #endif // !PLAYERCONIO_H_INCLUDED
 

@@ -41,9 +41,7 @@ void Battle::battleTrigger(bool trigger, char axis, Player* player, Enemies* ene
 
 	if (valido) {
 		std::srand(time(0));
-		//std::cout << &mapscreen->getPtr()[3][2] << std::endl;
 		this->tempEnemy = new Enemies::Enemie01(collider->temp, enemyIndex);
-		
 		for (size_t luta = 100; luta > 0; luta = menorvida) {
 			system("cls");
 			std::cout << "ENEMY LEVEL: " << enemyIndex << std::endl;
@@ -85,12 +83,12 @@ void Battle::battleTrigger(bool trigger, char axis, Player* player, Enemies* ene
 		delete this->tempEnemy;
 		this->tempEnemy = nullptr;
 	}
-	
 }
 
 bool Battle::whowillatack() {
 	return std::rand() % 2;
 }
+
 void Battle::atacar(Player* player, Enemies::Enemie01* enemy) {
 	std::string atacante, defensor;
 	float rangeAtq, rangeDef;
@@ -121,8 +119,8 @@ void Battle::atacar(Player* player, Enemies::Enemie01* enemy) {
 			}
 			break;
 		}
-		
 	}
+
 	if (!fugiu) {
 		if ((int)first == 0) {
 			atacante = player->getPlayer();
@@ -171,7 +169,6 @@ void Battle::atacar(Player* player, Enemies::Enemie01* enemy) {
 			this->menorvida = 0;
 		}
 	}
-	
 }
 
 void Battle::modscreen() {

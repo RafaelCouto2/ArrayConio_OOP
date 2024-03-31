@@ -8,9 +8,8 @@
 #define GAME_H_INCLUDED
 
 /*
-Parei hoje no desenvolvimento dos inimigos e a trigger da batalha. O plano é adicionar um array de char e guardar os inimigos nele.
-Ao iniciar a batalha, verifica o número do índice desse inimigo, quanto mais alto mais poderoso o inimigo será. Definirei um objeto
-para os inimigos com um argumento que acionará os modificadores da instância do inimigo.
+Parei hoje após a criação do sistema de combate. Agora é o level up, melhoria na UI, ajuste do inventário do player e mais possibilidades de inimgos.
+Me falta estudo para trabalhar com threads... Talvez futuramente!
 */
 
 class Game {
@@ -26,6 +25,7 @@ private:
 	short key; //KEYBOARD KEY
 	char** t; // PTR TO PTR FOR MAP MATRIX
 	char* p; // PLAYER PTR
+	char playerchar;
 	Player* player; // PLAYER OBJ
 	Atqmodifier atqMod[2];
 	Controller *game_controller;
@@ -41,19 +41,21 @@ Game::Game(short size, Player* player) {
 	this->player->setPos(&(this->t[this->conio->getLine() / 2][this->conio->getColumn() / 2])); //SET PLAYER POS *PTR TO THE MIDDLE OF MAP MATRIX ADRESS
 	this->key = 0;
 	this->p = this->player->getPlayer(); //SET PTR P TO GET PLAYER *PTR FROM PLAYER OBJ
-	//this->player->setInGameValue('x'); // CHANGE VALUE OF PLAYER PTR TO '1'
+	this->player->setInGameValue('x'); // CHANGE VALUE OF PLAYER PTR TO '1'
+	this->playerchar = this->player->getInGameValue();
 	this->player->setAlive(true);
 	this->atqMod[0].setAtqMod(this->atqMod[1].getAtqMod() * 1.5f);
 	game_controller = new Controller(this->conio, this->player, this->conio->getLine());
 }
 
 void Game::play() { //MAIN FUNC, WHO`LL CALL MOST OF FUNCS.
-	this->conio->screen();
-	this->playerstatus();
+	//this->conio->screen();
+	std::cout << "PRESS ANY KEY TO START! (ANY... BUT NOT ESC XD)";
+
 	this->t[2][1] = '2';
 	this->t[1][2] = 'O';
 	this->t[4][0] = 'I';
-	this->t[3][3] = 'J';
+	this->t[3][3] = 'N';
 	
 	while (key != 27) {
 		this->key = _getch(); //WAIT FOR SOME INPUT AND ISERT THE INTEGER VALUE INTO KEY
@@ -61,11 +63,10 @@ void Game::play() { //MAIN FUNC, WHO`LL CALL MOST OF FUNCS.
 		if (key == 112) {
 			this->player->usePotion();
 		}
-		this->game_controller->controller(this->key, 'x' /*WHAT IS THE PLAYER*/);
+		this->game_controller->controller(this->key, this->playerchar /*WHAT IS THE PLAYER*/);
 		this->conio->refresh();
 		this->playerstatus();
 	}
-
 }
 
 void Game::playerstatus() {
