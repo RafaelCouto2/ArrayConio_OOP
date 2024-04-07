@@ -4,6 +4,11 @@
 #include <cmath>
 #ifndef BATTLE_H_INCLUDED
 #define BATTLE_H_INCLUDED
+#define KEY_UP 72
+#define KEY_DOWN 80
+#define KEY_LEFT 75
+#define KEY_RIGHT 77
+#define KEY_SPACEBAR 32
 
 class Battle {
 public:
@@ -22,6 +27,7 @@ private:
 	void vitoria();
 	void derrota();
 	void escapar();
+	void select();
 	short key;
 };
 
@@ -43,10 +49,9 @@ void Battle::battleTrigger(bool trigger, char axis, Player* player, Enemies* ene
 		std::srand(time(NULL));
 		this->tempEnemy = new Enemies::Enemie01(collider->temp, enemyIndex);
 		for (size_t luta = 100; luta > 0; luta = menorvida) {
-			system("cls");
-			std::cout << "ENEMY LEVEL: " << enemyIndex << std::endl;
-			this->modscreen();
-			this->key = 0;
+			//this->modscreen();
+			this->select();
+			//this->key = 0;
 			this->atacar(this->player, this->tempEnemy);
 			if (this->tempEnemy->getLife() < 1) {
 				delete tempEnemy;
@@ -95,30 +100,22 @@ void Battle::atacar(Player* player, Enemies::Enemie01* enemy) {
 	float dadoatq, dadodef;
 	short first;
 	bool acertou = false, fugiu = false;
-	
-	while (this->key != 32) {
-		this->key = _getch();
-		switch (this->key) {
-		case 112:
-			this->player->usePotion();
-			break;
-		case 32:
-			first = this->whowillatack();
-			break;
-		case 27:
-			if (std::rand() % 20 > 15) {
-				this->escapar();
-				this->key = 32;
-				fugiu = true;
-				std::cout << "VOCÊ ESCAPOU!";
-			}
-			else {
-				first = 1;
-				this->key = 32;
-				std::cout << "VOCÊ NÃO PODE ESCAPAR!";
-			}
-			break;
+
+	switch (this->key) {
+	case 0:
+		first = this->whowillatack();
+		break;
+	case 1:
+		if (std::rand() % 20 > 15) {
+			this->escapar();
+			fugiu = true;
+			std::cout << "VOCÊ ESCAPOU!";
 		}
+		else {
+			first = 1;
+			std::cout << "VOCÊ NÃO PODE ESCAPAR!";
+		}
+		break;
 	}
 
 	if (!fugiu) {
@@ -172,6 +169,8 @@ void Battle::atacar(Player* player, Enemies::Enemie01* enemy) {
 }
 
 void Battle::modscreen() {
+	system("cls");
+	std::cout << "ENEMY LEVEL: " << enemyIndex << std::endl;
 	std::cout << "--------------------------------------------" << std::endl;
 	std::cout << "BATALHA!" << std::endl << "PLAYER[x]" << " VS " << "Enemy[" << this->tempEnemy->getEnemy() << ']' << std::endl << std::endl;
 	std::cout << "<MODIFICADORES DE ATAQUE>" << std::endl;
@@ -186,8 +185,6 @@ void Battle::modscreen() {
 	std::cout << "[PLAYER HEALTH]:..[" << this->player->lifeToScreen() << ']' << std::endl;
 	std::cout << "[ENEMY HEALTH]:...[" << this->tempEnemy->lifeToScreen() << ']' << std::endl;
 	std::cout << "---------------------------------------------" << std::endl;
-	std::cout << "['SPACE BAR' para atacar]" << std::endl;
-	std::cout << "['P' para usar poção]" << std::endl;
 }
 
 void Battle::vitoria() {
@@ -210,5 +207,65 @@ void Battle::escapar() {
 	this->menorvida = 0;
 }
 
+void Battle::select() {
+	std::string opcoes[] = { "[ATACAR]", "POÇÃO", "ESCAPAR"};
+	this->modscreen();
+	std::cout << opcoes[0] << "  |  " << opcoes[1] << "  |  " << opcoes[2] << std::endl;;
+	short indx{ 0 };
+	this->key = 0;
+	while (this->key != KEY_SPACEBAR) {
+		for (size_t i = 0; i < 3; i++) {
+			if (opcoes[i].at(0) == '[') {
+				indx = i;
+				break;
+			}
+		}
+		this->key = _getch();
+		switch (key) {
+		case KEY_RIGHT:
+			switch (indx) {
+			case 0:
+				opcoes[0].erase(remove(opcoes[0].begin(), opcoes[0].end(), ']'));
+				opcoes[0].erase(remove(opcoes[0].begin(), opcoes[0].end(), '['));
+				opcoes[1] = "[" + opcoes[1] + "]";
+				break;
+			case 1:
+				opcoes[1].erase(remove(opcoes[1].begin(), opcoes[1].end(), ']'));
+				opcoes[1].erase(remove(opcoes[1].begin(), opcoes[1].end(), '['));
+				opcoes[2] = "[" + opcoes[2] + "]";
+				break;
+			}
+			break;
+		case KEY_LEFT:
+			switch (indx) {
+			case 1:
+				opcoes[1].erase(remove(opcoes[1].begin(), opcoes[1].end(), ']'));
+				opcoes[1].erase(remove(opcoes[1].begin(), opcoes[1].end(), '['));
+				opcoes[0] = '[' + opcoes[0] + ']';
+				break;
+			case 2:
+				opcoes[2].erase(remove(opcoes[2].begin(), opcoes[2].end(), ']'));
+				opcoes[2].erase(remove(opcoes[2].begin(), opcoes[2].end(), '['));
+				opcoes[1] = '[' + opcoes[1] + ']';
+				break;
+			}
+			break;
+		}
+		this->modscreen();
+		std::cout << opcoes[0] << "  |  " << opcoes[1] << "  |  " << opcoes[2] << std::endl;;
+	}
+	switch (indx) {
+	case 0:
+		this->key = 0;
+		break;
+	case 1:
+		this->player->usePotion();
+		this->select();
+		break;
+	case 2:
+		this->key = 1;
+		break;
+	}
+}
 #endif // !BATTLE_H_INCLUDED
 
