@@ -40,7 +40,7 @@ void Battle::battleTrigger(bool trigger, char axis, Player* player, Enemies* ene
 	}
 
 	if (valido) {
-		std::srand(time(0));
+		std::srand(time(NULL));
 		this->tempEnemy = new Enemies::Enemie01(collider->temp, enemyIndex);
 		for (size_t luta = 100; luta > 0; luta = menorvida) {
 			system("cls");
@@ -135,8 +135,8 @@ void Battle::atacar(Player* player, Enemies::Enemie01* enemy) {
 			rangeDef = player->getPlayerMod()->getBaseDef();
 		}
 
-		dadoatq = rangeAtq + ((std::rand() % 2)) * (12 + 1);
-		dadodef = rangeDef + ((std::rand() % 2)) * (12 + 1);
+		dadoatq = rangeAtq + ((float(std::rand()) / float((RAND_MAX)) * 1.0)) * (12 + 1);
+		dadodef = rangeDef + ((float(std::rand()) / float((RAND_MAX)) * 1.0)) * (12 + 1);
 
 		if ((dadoatq > 0) && (dadodef < dadoatq)) {
 			if (dadoatq > 1) {

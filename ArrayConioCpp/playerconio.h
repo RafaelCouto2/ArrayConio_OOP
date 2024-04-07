@@ -55,6 +55,7 @@ Player::Player() {
 	this->baseAtq = this->modifier.getBaseAtq();
 	this->modifier.setBaseDef(baseAtq / (1.5 * 0.52));
 	this->baseDef = this->modifier.getBaseDef();
+	this->setInvCap(10);
 	this->setPotions(3);
 }
 
@@ -142,7 +143,7 @@ short Player::getInvCap() {
 }
 
 void Player::usePotion() {
-	if (this->getLf() < 100) {
+	if (this->getLf() < 100 and this->getPotions() >= 1) {
 		this->setPotions(this->getPotions() - 1);
 		this->setLf(100);
 	}
