@@ -28,6 +28,7 @@ private:
 	void derrota();
 	void escapar();
 	void select();
+	float escapeDif();
 	short key;
 };
 
@@ -65,7 +66,7 @@ void Battle::battleTrigger(bool trigger, char axis, Player* player, Enemies* ene
 				this->derrota();
 				break;
 			}
-			Sleep(300);
+			Sleep(600);
 		}
 		
 		switch (axis) {
@@ -98,7 +99,7 @@ void Battle::atacar(Player* player, Enemies::Enemie01* enemy) {
 	std::string atacante, defensor;
 	float rangeAtq, rangeDef;
 	float dadoatq, dadodef;
-	short first;
+	short first, dice;
 	bool acertou = false, fugiu = false;
 
 	switch (this->key) {
@@ -106,14 +107,16 @@ void Battle::atacar(Player* player, Enemies::Enemie01* enemy) {
 		first = this->whowillatack();
 		break;
 	case 1:
-		if (std::rand() % 20 > 15) {
+		dice = std::rand() % 21;
+		if (dice >= 5 * this->escapeDif()) {
 			this->escapar();
 			fugiu = true;
 			std::cout << "VOCÊ ESCAPOU!";
 		}
 		else {
 			first = 1;
-			std::cout << "VOCÊ NÃO PODE ESCAPAR!";
+			std::cout << "ROLL NECESSÁRIO: " << 5 * escapeDif() << std::endl;
+			std::cout << "VOCÊ NÃO PODE ESCAPAR! SEU DADO FOI: " << dice << std::endl;
 		}
 		break;
 	}
@@ -182,6 +185,7 @@ void Battle::modscreen() {
 	std::cout << "<><><><><>[PLAYER INVENTORY]<><><><><>" << std::endl;
 	std::cout << "[POTIONS]: " << this->player->getPotions() << std::endl;
 	std::cout << "<><><><><><><><><><><><><><><><><><><>" << std::endl << std::endl;
+	std::cout << "---------------------------------------------" << std::endl;
 	std::cout << "[PLAYER HEALTH]:..[" << this->player->lifeToScreen() << ']' << std::endl;
 	std::cout << "[ENEMY HEALTH]:...[" << this->tempEnemy->lifeToScreen() << ']' << std::endl;
 	std::cout << "---------------------------------------------" << std::endl;
@@ -194,6 +198,7 @@ void Battle::vitoria() {
 	}
 	this->gg = true;
 	if (std::rand() % 30 > 20) {
+		if(this->player->invVerifier())
 		this->player->setPotions(this->player->getPotions() + 1);
 	}
 }
@@ -267,5 +272,10 @@ void Battle::select() {
 		break;
 	}
 }
+
+float Battle::escapeDif() {
+	return this->player->getPlayerMod()->getBaseDef() > this->tempEnemy->getEnemyMod()->getBaseDef() ? 0.8 : std::ceil(this->tempEnemy->getEnemyMod()->getBaseDef() / 1.5);
+}
+
 #endif // !BATTLE_H_INCLUDED
 

@@ -52,9 +52,9 @@ void Game::play() { //MAIN FUNC, WHO`LL CALL MOST OF FUNCS.
 	//this->conio->screen();
 	std::cout << "PRESS ANY KEY TO START! (ANY... BUT NOT ESC XD)";
 
-	this->t[2][1] = '2';
-	this->t[1][2] = 'O';
-	this->t[4][0] = 'I';
+	this->t[2][1] = 'g';
+	this->t[1][2] = 'c';
+	this->t[4][0] = 'u';
 	this->t[3][3] = 'N';
 	
 	while (key != 27) {

@@ -48,7 +48,7 @@ private:
 	short baseDef;
 	Atqmodifier modifier;
 	char enemy;
-	char lifeScreen[100];
+	char lifeScreen[10];
 };
 
 Enemies::Enemie01::Enemie01(char e, short baseatq) {
@@ -57,7 +57,7 @@ Enemies::Enemie01::Enemie01(char e, short baseatq) {
 	this->modifier.setBaseDef(baseatq / (1.5 * 0.52));
 	this->baseAtq = this->modifier.getBaseAtq();
 	this->baseDef = this->modifier.getBaseDef();
-	this->life = 100;
+	this->setLife(100);
 }
 
 char Enemies::Enemie01::getEnemy() {
@@ -86,7 +86,7 @@ std::string Enemies::Enemie01::lifeToScreen() {
 			this->lifeScreen[i] = ' ';
 		}
 	}
-	return lifeScreen;
+	return this->lifeScreen;
 }
 
 #endif // !ENM1_H_INCLUDED

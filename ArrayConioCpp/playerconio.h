@@ -34,21 +34,25 @@ public:
 	void setInvCap(short cap);
 	short getInvCap();
 	void usePotion();
+	short *getInventory();
+	bool invVerifier();
 protected:
 	bool alive; //STATUS
 	Atqmodifier modifier;
 private:
+	short inventory[3] = {3, 0, 0};
 	enum st { LIFE = 100, STAMIN = 100, AMMO = 50, LIVES = 3 }; //LIFE, STAMIN, AMMO ENUM VALUES. CONSTANTS
 	char lifeScreen[100];
 	short status[4] = { LIFE, STAMIN, AMMO, LIVES }; //4 INDEX ARRAY WHO'LL HAVE THE BASE VALUES OF CONSTATS. (CHANGEABLE)
-	short* pstatus = status; // PTR TO STATUS
+	short* pstatus; // PTR TO STATUS
 	char* p; //PTR P
 	float baseAtq, baseDef;
 	short invCap;
-	short potions;
+	//short potions;
 };
 
 Player::Player() {
+	this->pstatus = this->status;
 	this->setLf(100);
 	this->setLvs(3);
 	this->modifier.setBaseAtq(1.11);
@@ -57,6 +61,7 @@ Player::Player() {
 	this->baseDef = this->modifier.getBaseDef();
 	this->setInvCap(10);
 	this->setPotions(3);
+	this->setInvCap(7);
 }
 
 short Player::getLf() {
@@ -102,7 +107,7 @@ std::string Player::lifeToScreen() {
 			this->lifeScreen[i] = ' ';
 		}
 	}
-	return lifeScreen;
+	return this->lifeScreen;
 }
 
 bool Player::isAlive() {
@@ -127,11 +132,11 @@ void Player::setBaseAtq(float batq) {
 }
 
 void Player::setPotions(short totPot) {
-	this->potions = totPot;
+	this->inventory[0] = totPot;
 }
 
 short Player::getPotions() {
-	return this->potions;
+	return this->inventory[0];
 }
 
 void Player::setInvCap(short cap) {
@@ -147,6 +152,14 @@ void Player::usePotion() {
 		this->setPotions(this->getPotions() - 1);
 		this->setLf(100);
 	}
+}
+
+short *Player::getInventory() {
+	return this->inventory;
+}
+
+bool Player::invVerifier() {
+	return !((this->getInventory()[0] + this->getInventory()[1] + this->getInventory()[2]) >= this->getInvCap());	
 }
 
 char Player::getInGameValue() {
